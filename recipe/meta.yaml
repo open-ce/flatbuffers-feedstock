@@ -1,0 +1,42 @@
+{% set version = "1.12.0" %}
+{% set hash = "62f2223fb9181d1d6338451375628975775f7522185266cd5296571ac152bc45" %}
+
+package:
+  name: flatbuffers
+  version: {{ version }}
+
+source:
+  fn: flatbuffers-{{ version }}.tar.gz
+  url: https://github.com/google/flatbuffers/archive/v{{ version }}.tar.gz
+  sha256: {{ hash }}
+
+build:
+  number: 0
+  skip: True  # [win and vc<14]
+
+requirements:
+  build:
+    - cmake  {{ cmake }}
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - ninja  {{ ninja }}
+
+test:
+  commands:
+    - test -f $PREFIX/bin/flatc                                                     # [not win]
+    - test -f $PREFIX/include/flatbuffers/flatbuffers.h                             # [not win]
+    - if not exist %PREFIX%\\Library\\bin\\flatc.exe exit 1                         # [win]
+    - if not exist %PREFIX%\\Library\\include\\flatbuffers\\flatbuffers.h exit 1    # [win]
+
+about:
+  home: http://google.github.io/flatbuffers/
+  license: Apache 2.0
+  license_file: LICENSE.txt
+  summary: Memory Efficient Serialization Library
+
+extra:
+  recipe-maintainers:
+    - wesm
+    - msarahan
+    - jakirkham
+    - xhochy
