@@ -36,7 +36,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - wesm
-    - msarahan
-    - jakirkham
-    - xhochy
+    - open-ce/open-ce-dev-team
